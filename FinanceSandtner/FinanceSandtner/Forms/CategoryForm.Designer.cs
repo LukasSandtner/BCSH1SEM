@@ -88,43 +88,47 @@
             // 
             // btnAdd
             // 
+            btnAdd.BackColor = SystemColors.InactiveCaption;
             btnAdd.ForeColor = Color.Black;
             btnAdd.Location = new Point(4, 18);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(75, 23);
             btnAdd.TabIndex = 5;
             btnAdd.Text = "Přidat";
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.UseVisualStyleBackColor = false;
             // 
             // btnAlter
             // 
+            btnAlter.BackColor = SystemColors.InactiveCaption;
             btnAlter.ForeColor = Color.Black;
             btnAlter.Location = new Point(85, 18);
             btnAlter.Name = "btnAlter";
             btnAlter.Size = new Size(75, 23);
             btnAlter.TabIndex = 6;
             btnAlter.Text = "Upravit";
-            btnAlter.UseVisualStyleBackColor = true;
+            btnAlter.UseVisualStyleBackColor = false;
             // 
             // btnDelete
             // 
+            btnDelete.BackColor = SystemColors.InactiveCaption;
             btnDelete.ForeColor = Color.Black;
             btnDelete.Location = new Point(166, 18);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(75, 23);
             btnDelete.TabIndex = 7;
             btnDelete.Text = "Smazat";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnCancel
             // 
+            btnCancel.BackColor = SystemColors.InactiveCaption;
             btnCancel.ForeColor = Color.Black;
             btnCancel.Location = new Point(247, 18);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(75, 23);
             btnCancel.TabIndex = 8;
             btnCancel.Text = "Zrušit";
-            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.UseVisualStyleBackColor = false;
             // 
             // groupBox1
             // 

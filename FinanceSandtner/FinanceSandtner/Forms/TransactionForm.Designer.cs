@@ -159,23 +159,25 @@
             // 
             // btnSave
             // 
+            btnSave.BackColor = SystemColors.InactiveCaption;
             btnSave.ForeColor = Color.Black;
             btnSave.Location = new Point(67, 22);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 23);
             btnSave.TabIndex = 12;
             btnSave.Text = "Uložit";
-            btnSave.UseVisualStyleBackColor = true;
+            btnSave.UseVisualStyleBackColor = false;
             // 
             // btnCancel
             // 
+            btnCancel.BackColor = SystemColors.InactiveCaption;
             btnCancel.ForeColor = Color.Black;
             btnCancel.Location = new Point(148, 22);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(75, 23);
             btnCancel.TabIndex = 13;
             btnCancel.Text = "Zrušit";
-            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.UseVisualStyleBackColor = false;
             // 
             // groupBox1
             // 

@@ -16,20 +16,10 @@ namespace FinanceSandtner.Forms
     {
         private readonly TransactionService _transactionService = new();
 
-        private readonly Button _btnPieByCategory;
-        private readonly Button _btnPieByCategoryType;
-        private readonly Button _btnLineBalanceOverTime;
-        private readonly Button _btnStackedByMonth;
-        private readonly Button _btnMembersIncomeExpense;
-
-        private readonly Button _btnPrediction;
-
         private readonly RadioButton _rbWeek;
         private readonly RadioButton _rbMonth;
         private readonly RadioButton _rbQuarter;
         private readonly RadioButton _rbYear;
-
-        private readonly FlowLayoutPanel _rbPanel;
 
         private readonly PieChart _pieChart;
         private readonly CartesianChart _cartesianChart;
@@ -37,82 +27,19 @@ namespace FinanceSandtner.Forms
         public ChartsForm()
         {
             InitializeComponent();
+            Width = 1450;
 
-            Text = "Přehled – grafy";
-            Width = 1200;
-            Height = 650;
-            StartPosition = FormStartPosition.CenterParent;
-
-            _btnPieByCategory = new Button
-            {
-                Text = "Koláč – výdaje podle kategorií",
-                Dock = DockStyle.Left,
-                Width = 210
-            };
-            _btnPieByCategory.Click += (_, __) => ShowPieByCategory();
-
-            _btnPieByCategoryType = new Button
-            {
-                Text = "Koláč – výdaje podle typu kategorie",
-                Dock = DockStyle.Left,
-                Width = 240
-            };
-            _btnPieByCategoryType.Click += (_, __) => ShowPieByCategoryType();
-
-            _btnLineBalanceOverTime = new Button
-            {
-                Text = "Spojnice – vývoj zůstatku v čase",
-                Dock = DockStyle.Left,
-                Width = 230
-            };
-            _btnLineBalanceOverTime.Click += (_, __) => ShowLineBalanceOverTime();
-
-            _btnStackedByMonth = new Button
-            {
-                Text = "Skládaný – příjmy vs. výdaje (měsíce)",
-                Dock = DockStyle.Left,
-                Width = 240
-            };
-            _btnStackedByMonth.Click += (_, __) => ShowStackedByMonth();
-
-            _btnMembersIncomeExpense = new Button
-            {
-                Text = "Členové – příjmy a výdaje",
-                Dock = DockStyle.Left,
-                Width = 210
-            };
-            _btnMembersIncomeExpense.Click += (_, __) => ShowMembersIncomeExpense();
-
-            _btnPrediction = new Button
-            {
-                Text = "Predikce",
-                Dock = DockStyle.Left,
-                Width = 110
-            };
-            _btnPrediction.Click += (_, __) => ShowPrediction();
-
-            // panel s radiobuttony pro horizont predikce (viditelný jen v režimu Predikce)
             _rbWeek = new RadioButton { Text = "Týden", AutoSize = true };
             _rbMonth = new RadioButton { Text = "Měsíc", AutoSize = true };
             _rbQuarter = new RadioButton { Text = "Čtvrtletí", AutoSize = true };
             _rbYear = new RadioButton { Text = "Rok", AutoSize = true };
 
             _rbWeek.Checked = true;
-
-            _rbPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Right,
-                Width = 360,
-                FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = false,
-                Padding = new Padding(10, 10, 10, 0),
-                Visible = false
-            };
-            _rbPanel.Controls.Add(new Label { Text = "Horizont:", AutoSize = true, Padding = new Padding(0, 3, 8, 0) });
-            _rbPanel.Controls.Add(_rbWeek);
-            _rbPanel.Controls.Add(_rbMonth);
-            _rbPanel.Controls.Add(_rbQuarter);
-            _rbPanel.Controls.Add(_rbYear);
+            rbPanel.Controls.Add(new Label { Text = "Horizont:", AutoSize = true, Padding = new Padding(0, 3, 8, 0) });
+            rbPanel.Controls.Add(_rbWeek);
+            rbPanel.Controls.Add(_rbMonth);
+            rbPanel.Controls.Add(_rbQuarter);
+            rbPanel.Controls.Add(_rbYear);
 
             _rbWeek.CheckedChanged += (_, __) => { if (_rbWeek.Checked) TryRefreshPredictionIfVisible(); };
             _rbMonth.CheckedChanged += (_, __) => { if (_rbMonth.Checked) TryRefreshPredictionIfVisible(); };
@@ -125,15 +52,13 @@ namespace FinanceSandtner.Forms
                 Height = 45
             };
 
-            topPanel.Controls.Add(_rbPanel);
-
-            // tlačítka zleva (DockStyle.Left -> poslední Add je nejvíc vlevo)
-            topPanel.Controls.Add(_btnMembersIncomeExpense);
-            topPanel.Controls.Add(_btnStackedByMonth);
-            topPanel.Controls.Add(_btnLineBalanceOverTime);
-            topPanel.Controls.Add(_btnPieByCategoryType);
-            topPanel.Controls.Add(_btnPieByCategory);
-            topPanel.Controls.Add(_btnPrediction);
+            topPanel.Controls.Add(rbPanel);
+            topPanel.Controls.Add(btnLineBalanceOverTime);
+            topPanel.Controls.Add(btnMembersIncomeExpense);
+            topPanel.Controls.Add(btnPieByCategory);
+            topPanel.Controls.Add(btnPieByCategoryType);
+            topPanel.Controls.Add(btnStackedByMonth);
+            topPanel.Controls.Add(btnPrediction);
 
             _pieChart = new PieChart
             {
@@ -155,11 +80,11 @@ namespace FinanceSandtner.Forms
             ShowPieByCategory();
         }
 
-        private void SetPredictionUiVisible(bool visible) => _rbPanel.Visible = visible;
+        private void SetPredictionUiVisible(bool visible) => rbPanel.Visible = visible;
 
         private void TryRefreshPredictionIfVisible()
         {
-            if (_cartesianChart.Visible && !_pieChart.Visible && _rbPanel.Visible)
+            if (_cartesianChart.Visible && !_pieChart.Visible && rbPanel.Visible)
             {
                 ShowPrediction();
             }
@@ -203,7 +128,6 @@ namespace FinanceSandtner.Forms
 
             var ordered = transactions.OrderBy(t => t.Date.Date).ToList();
 
-            // historie zůstatku po dnech (poslední stav v daný den)
             var history = BuildDailyBalanceSeries(ordered);
             if (history.Count == 0)
             {
@@ -214,7 +138,6 @@ namespace FinanceSandtner.Forms
             var lastDate = history[^1].Date;
             var lastBalance = history[^1].Balance;
 
-            // průměrná denní změna z posledního čtvrtletí (~90 dní) – fallback na celek
             var avgDailyChange = ComputeAverageDailyChange(history, lookbackDays: 90);
 
             var horizonDays = GetHorizonDays(GetSelectedHorizon());
@@ -222,17 +145,14 @@ namespace FinanceSandtner.Forms
             var startDate = lastDate;
             var endDate = lastDate.AddDays(horizonDays);
 
-            // labels od startDate do endDate (včetně)
             var allDates = Enumerable.Range(0, horizonDays + 1).Select(i => startDate.AddDays(i)).ToList();
             var labels = allDates.Select(d => d.ToShortDateString()).ToArray();
 
-            // y pro celé období (start + predikce)
             var yAll = new decimal[horizonDays + 1];
             yAll[0] = lastBalance;
             for (int i = 1; i <= horizonDays; i++)
                 yAll[i] = lastBalance + avgDailyChange * i;
 
-            // Y rozsah jen podle dat (+ malý padding), aby se osa neroztáhla
             var minY = yAll.Min();
             var maxY = yAll.Max();
             var range = maxY - minY;
@@ -241,12 +161,10 @@ namespace FinanceSandtner.Forms
             var minYWithPad = minY - pad;
             var maxYWithPad = maxY + pad;
 
-            // v režimu predikce schovej legendu (aby nebyla zbytečně velká)
             _cartesianChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Hidden;
 
             var series = new List<ISeries>();
 
-            // Predikce segmenty: zelená/červená podle směru
             var upPaint = new SolidColorPaint(SKColors.ForestGreen, 3);
             var downPaint = new SolidColorPaint(SKColors.IndianRed, 3);
             var flatPaint = new SolidColorPaint(SKColors.Gray, 3);
@@ -274,7 +192,6 @@ namespace FinanceSandtner.Forms
                 });
             }
 
-            // 0 Kč linka (oranžová) – viditelná, ale nepřetahuje osu
             series.Add(new LineSeries<LiveChartsCore.Defaults.ObservablePoint>
             {
                 Name = null,
@@ -288,7 +205,6 @@ namespace FinanceSandtner.Forms
                 Stroke = new SolidColorPaint(SKColors.Orange, 2)
             });
 
-            // Start/Konec svislé linky – jen v rozsahu grafu
             series.AddRange(CreateVerticalMarkerLines(horizonDays, minYWithPad, maxYWithPad));
 
             _cartesianChart.Series = series.ToArray();
@@ -377,7 +293,7 @@ namespace FinanceSandtner.Forms
             var cutoff = lastDate.AddDays(-lookbackDays);
 
             var window = history.Where(p => p.Date >= cutoff).ToList();
-            if (window.Count < 2) window = history; // fallback na celek
+            if (window.Count < 2) window = history;
             if (window.Count < 2) return 0m;
 
             decimal sumPerDay = 0m;
@@ -646,6 +562,36 @@ namespace FinanceSandtner.Forms
 
             _cartesianChart.Visible = true;
             _pieChart.Visible = false;
+        }
+
+        private void btnPieCategory_Click(object sender, EventArgs e)
+        {
+            ShowPieByCategory();
+        }
+
+        private void btnPieByCategoryType_Click(object sender, EventArgs e)
+        {
+            ShowPieByCategoryType();
+        }
+
+        private void btnLineBalanceOverTime_Click(object sender, EventArgs e)
+        {
+            ShowLineBalanceOverTime();
+        }
+
+        private void btnStackedByMonth_Click(object sender, EventArgs e)
+        {
+            ShowStackedByMonth();
+        }
+
+        private void btnMembersIncomeExpense_Click(object sender, EventArgs e)
+        {
+            ShowMembersIncomeExpense();
+        }
+
+        private void btnPrediction_Click(object sender, EventArgs e)
+        {
+            ShowPrediction();
         }
     }
 }

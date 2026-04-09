@@ -127,43 +127,47 @@
             // 
             // btnAdd
             // 
+            btnAdd.BackColor = SystemColors.InactiveCaption;
             btnAdd.ForeColor = Color.Black;
             btnAdd.Location = new Point(21, 22);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(75, 23);
             btnAdd.TabIndex = 9;
             btnAdd.Text = "Přidat";
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.UseVisualStyleBackColor = false;
             // 
             // btnEdit
             // 
+            btnEdit.BackColor = SystemColors.InactiveCaption;
             btnEdit.ForeColor = Color.Black;
             btnEdit.Location = new Point(102, 22);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(75, 23);
             btnEdit.TabIndex = 10;
             btnEdit.Text = "Upravit";
-            btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.UseVisualStyleBackColor = false;
             // 
             // btnDelete
             // 
+            btnDelete.BackColor = SystemColors.InactiveCaption;
             btnDelete.ForeColor = Color.Black;
             btnDelete.Location = new Point(183, 22);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(75, 23);
             btnDelete.TabIndex = 11;
             btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnCancel
             // 
+            btnCancel.BackColor = SystemColors.InactiveCaption;
             btnCancel.ForeColor = Color.Black;
             btnCancel.Location = new Point(264, 22);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(75, 23);
             btnCancel.TabIndex = 12;
             btnCancel.Text = "Zrušit";
-            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click_1;
             // 
             // groupBox1

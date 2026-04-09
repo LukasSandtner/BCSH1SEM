@@ -88,87 +88,110 @@
             dataGridViewTransaction.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewTransaction.Location = new Point(0, 29);
             dataGridViewTransaction.Name = "dataGridViewTransaction";
-            dataGridViewTransaction.Size = new Size(756, 156);
+            dataGridViewTransaction.Size = new Size(753, 156);
             dataGridViewTransaction.TabIndex = 0;
             dataGridViewTransaction.CellDoubleClick += dataGridViewTransaction_CellDoubleClick_1;
             // 
             // btnAddTransaction
             // 
+            btnAddTransaction.Anchor = AnchorStyles.Bottom;
+            btnAddTransaction.AutoSize = true;
+            btnAddTransaction.BackColor = SystemColors.InactiveCaption;
             btnAddTransaction.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             btnAddTransaction.ForeColor = Color.Black;
-            btnAddTransaction.Location = new Point(285, 35);
+            btnAddTransaction.Location = new Point(379, 34);
+            btnAddTransaction.Margin = new Padding(0);
             btnAddTransaction.Name = "btnAddTransaction";
-            btnAddTransaction.Size = new Size(133, 35);
+            btnAddTransaction.Size = new Size(120, 40);
             btnAddTransaction.TabIndex = 3;
             btnAddTransaction.Text = "Nová transakce";
-            btnAddTransaction.UseVisualStyleBackColor = true;
+            btnAddTransaction.UseVisualStyleBackColor = false;
             btnAddTransaction.Click += btnAddTransaction_Click;
             // 
             // btnHandleMembers
             // 
+            btnHandleMembers.Anchor = AnchorStyles.Bottom;
+            btnHandleMembers.AutoSize = true;
+            btnHandleMembers.BackColor = SystemColors.InactiveCaption;
             btnHandleMembers.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             btnHandleMembers.ForeColor = Color.Black;
-            btnHandleMembers.Location = new Point(192, 35);
+            btnHandleMembers.Location = new Point(254, 34);
+            btnHandleMembers.Margin = new Padding(0);
             btnHandleMembers.Name = "btnHandleMembers";
-            btnHandleMembers.Size = new Size(86, 35);
+            btnHandleMembers.Size = new Size(120, 40);
             btnHandleMembers.TabIndex = 4;
             btnHandleMembers.Text = "Členové";
-            btnHandleMembers.UseVisualStyleBackColor = true;
+            btnHandleMembers.UseVisualStyleBackColor = false;
             btnHandleMembers.Click += btnHandleMembers_Click_1;
             // 
             // btnHandleCategories
             // 
+            btnHandleCategories.Anchor = AnchorStyles.Bottom;
+            btnHandleCategories.AutoSize = true;
+            btnHandleCategories.BackColor = SystemColors.InactiveCaption;
             btnHandleCategories.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             btnHandleCategories.ForeColor = Color.Black;
-            btnHandleCategories.Location = new Point(7, 35);
+            btnHandleCategories.Location = new Point(4, 34);
+            btnHandleCategories.Margin = new Padding(0);
             btnHandleCategories.Name = "btnHandleCategories";
-            btnHandleCategories.Size = new Size(86, 35);
+            btnHandleCategories.Size = new Size(120, 40);
             btnHandleCategories.TabIndex = 5;
             btnHandleCategories.Text = "Kategorie";
-            btnHandleCategories.UseVisualStyleBackColor = true;
+            btnHandleCategories.UseVisualStyleBackColor = false;
             btnHandleCategories.Click += btnHandleCategories_Click_1;
             // 
             // btnCharts
             // 
+            btnCharts.Anchor = AnchorStyles.Bottom;
+            btnCharts.AutoSize = true;
+            btnCharts.BackColor = SystemColors.InactiveCaption;
             btnCharts.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             btnCharts.ForeColor = Color.Black;
-            btnCharts.Location = new Point(99, 35);
+            btnCharts.Location = new Point(129, 34);
+            btnCharts.Margin = new Padding(0);
             btnCharts.Name = "btnCharts";
-            btnCharts.Size = new Size(86, 35);
+            btnCharts.Size = new Size(120, 40);
             btnCharts.TabIndex = 6;
             btnCharts.Text = "Grafy";
-            btnCharts.UseVisualStyleBackColor = true;
+            btnCharts.UseVisualStyleBackColor = false;
             btnCharts.Click += btnCharts_Click_1;
             // 
             // btnDelete
             // 
+            btnDelete.Anchor = AnchorStyles.Bottom;
+            btnDelete.AutoSize = true;
+            btnDelete.BackColor = SystemColors.InactiveCaption;
             btnDelete.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             btnDelete.ForeColor = Color.Black;
-            btnDelete.Location = new Point(424, 35);
+            btnDelete.Location = new Point(504, 34);
+            btnDelete.Margin = new Padding(0);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(101, 35);
+            btnDelete.Size = new Size(120, 40);
             btnDelete.TabIndex = 7;
             btnDelete.Text = "Odstranit ";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // btnCancel
             // 
+            btnCancel.Anchor = AnchorStyles.Bottom;
+            btnCancel.AutoSize = true;
+            btnCancel.BackColor = SystemColors.InactiveCaption;
             btnCancel.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             btnCancel.ForeColor = Color.Black;
-            btnCancel.Location = new Point(531, 35);
+            btnCancel.Location = new Point(629, 34);
+            btnCancel.Margin = new Padding(0);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(86, 35);
+            btnCancel.Size = new Size(120, 40);
             btnCancel.TabIndex = 8;
             btnCancel.Text = "Konec";
-            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click_1;
             // 
             // groupBox1
             // 
-            groupBox1.Anchor = AnchorStyles.Bottom;
-            groupBox1.AutoSize = true;
-            groupBox1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            groupBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox1.BackColor = Color.Transparent;
             groupBox1.Controls.Add(btnCancel);
             groupBox1.Controls.Add(btnHandleCategories);
             groupBox1.Controls.Add(btnCharts);
@@ -177,9 +200,9 @@
             groupBox1.Controls.Add(btnHandleMembers);
             groupBox1.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             groupBox1.ForeColor = Color.Gray;
-            groupBox1.Location = new Point(88, 405);
+            groupBox1.Location = new Point(11, 405);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(623, 93);
+            groupBox1.Size = new Size(753, 93);
             groupBox1.TabIndex = 9;
             groupBox1.TabStop = false;
             groupBox1.Text = "Ovládací panel";
@@ -227,6 +250,7 @@
             // pnlFilter
             // 
             pnlFilter.AutoScroll = true;
+            pnlFilter.BackColor = SystemColors.InactiveCaption;
             pnlFilter.Controls.Add(btnClearFilter);
             pnlFilter.Controls.Add(dtpTo);
             pnlFilter.Controls.Add(dtpFrom);
@@ -245,7 +269,7 @@
             pnlFilter.Dock = DockStyle.Left;
             pnlFilter.Location = new Point(0, 0);
             pnlFilter.Name = "pnlFilter";
-            pnlFilter.Size = new Size(137, 510);
+            pnlFilter.Size = new Size(140, 510);
             pnlFilter.TabIndex = 12;
             pnlFilter.Visible = false;
             // 
@@ -362,7 +386,7 @@
             // 
             btnToggleFilter.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnToggleFilter.Image = (Image)resources.GetObject("btnToggleFilter.Image");
-            btnToggleFilter.Location = new Point(726, 0);
+            btnToggleFilter.Location = new Point(723, 0);
             btnToggleFilter.Name = "btnToggleFilter";
             btnToggleFilter.Size = new Size(30, 23);
             btnToggleFilter.TabIndex = 13;
@@ -375,7 +399,7 @@
             panel1.Controls.Add(btnToggleFilter);
             panel1.Location = new Point(11, 213);
             panel1.Name = "panel1";
-            panel1.Size = new Size(756, 186);
+            panel1.Size = new Size(753, 186);
             panel1.TabIndex = 14;
             // 
             // panel2
@@ -385,7 +409,7 @@
             panel2.Controls.Add(labelLeftOver);
             panel2.Location = new Point(11, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(756, 197);
+            panel2.Size = new Size(753, 197);
             panel2.TabIndex = 15;
             // 
             // tableLayoutPanel1
@@ -410,7 +434,7 @@
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(460, 150);
+            tableLayoutPanel1.Size = new Size(457, 150);
             tableLayoutPanel1.TabIndex = 12;
             // 
             // lblAvgExp
@@ -419,7 +443,7 @@
             lblAvgExp.Dock = DockStyle.Fill;
             lblAvgExp.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblAvgExp.ForeColor = Color.Black;
-            lblAvgExp.Location = new Point(348, 75);
+            lblAvgExp.Location = new Point(345, 75);
             lblAvgExp.Name = "lblAvgExp";
             lblAvgExp.Size = new Size(109, 75);
             lblAvgExp.TabIndex = 7;
@@ -432,9 +456,9 @@
             lblThisMonthExp.Dock = DockStyle.Fill;
             lblThisMonthExp.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblThisMonthExp.ForeColor = Color.Black;
-            lblThisMonthExp.Location = new Point(233, 75);
+            lblThisMonthExp.Location = new Point(231, 75);
             lblThisMonthExp.Name = "lblThisMonthExp";
-            lblThisMonthExp.Size = new Size(109, 75);
+            lblThisMonthExp.Size = new Size(108, 75);
             lblThisMonthExp.TabIndex = 6;
             lblThisMonthExp.Text = "label5";
             lblThisMonthExp.TextAlign = ContentAlignment.MiddleCenter;
@@ -445,9 +469,9 @@
             lblTopEarner.Dock = DockStyle.Fill;
             lblTopEarner.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblTopEarner.ForeColor = Color.Black;
-            lblTopEarner.Location = new Point(118, 75);
+            lblTopEarner.Location = new Point(117, 75);
             lblTopEarner.Name = "lblTopEarner";
-            lblTopEarner.Size = new Size(109, 75);
+            lblTopEarner.Size = new Size(108, 75);
             lblTopEarner.TabIndex = 5;
             lblTopEarner.Text = "label4";
             lblTopEarner.TextAlign = ContentAlignment.MiddleCenter;
@@ -460,7 +484,7 @@
             lblTopSpender.ForeColor = Color.Black;
             lblTopSpender.Location = new Point(3, 75);
             lblTopSpender.Name = "lblTopSpender";
-            lblTopSpender.Size = new Size(109, 75);
+            lblTopSpender.Size = new Size(108, 75);
             lblTopSpender.TabIndex = 4;
             lblTopSpender.Text = "label3";
             lblTopSpender.TextAlign = ContentAlignment.MiddleCenter;
@@ -473,7 +497,7 @@
             lblTopIncome.ForeColor = Color.Black;
             lblTopIncome.Location = new Point(3, 0);
             lblTopIncome.Name = "lblTopIncome";
-            lblTopIncome.Size = new Size(109, 75);
+            lblTopIncome.Size = new Size(108, 75);
             lblTopIncome.TabIndex = 0;
             lblTopIncome.Text = "lblTopIncome";
             lblTopIncome.TextAlign = ContentAlignment.MiddleCenter;
@@ -484,9 +508,9 @@
             lblTopExpense.Dock = DockStyle.Fill;
             lblTopExpense.Font = new Font("Ebrima", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 238);
             lblTopExpense.ForeColor = Color.Black;
-            lblTopExpense.Location = new Point(118, 0);
+            lblTopExpense.Location = new Point(117, 0);
             lblTopExpense.Name = "lblTopExpense";
-            lblTopExpense.Size = new Size(109, 75);
+            lblTopExpense.Size = new Size(108, 75);
             lblTopExpense.TabIndex = 1;
             lblTopExpense.Text = "lblTopExpence";
             lblTopExpense.TextAlign = ContentAlignment.MiddleCenter;
@@ -497,9 +521,9 @@
             lblTopCat.Dock = DockStyle.Fill;
             lblTopCat.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblTopCat.ForeColor = Color.Black;
-            lblTopCat.Location = new Point(233, 0);
+            lblTopCat.Location = new Point(231, 0);
             lblTopCat.Name = "lblTopCat";
-            lblTopCat.Size = new Size(109, 75);
+            lblTopCat.Size = new Size(108, 75);
             lblTopCat.TabIndex = 2;
             lblTopCat.Text = "lblTopCat";
             lblTopCat.TextAlign = ContentAlignment.MiddleCenter;
@@ -510,7 +534,7 @@
             lblTurnover.Dock = DockStyle.Fill;
             lblTurnover.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblTurnover.ForeColor = Color.Black;
-            lblTurnover.Location = new Point(348, 0);
+            lblTurnover.Location = new Point(345, 0);
             lblTurnover.Name = "lblTurnover";
             lblTurnover.Size = new Size(109, 75);
             lblTurnover.TabIndex = 3;
@@ -539,15 +563,16 @@
             panel3.Controls.Add(groupBox1);
             panel3.Controls.Add(panel1);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(137, 0);
+            panel3.Location = new Point(140, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(777, 510);
+            panel3.Size = new Size(774, 510);
             panel3.TabIndex = 16;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(914, 510);
             Controls.Add(panel3);
             Controls.Add(pnlFilter);
@@ -558,6 +583,7 @@
             FormClosing += MainForm_FormClosing_1;
             ((System.ComponentModel.ISupportInitialize)dataGridViewTransaction).EndInit();
             groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             pnlFilter.ResumeLayout(false);
             pnlFilter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trkAmountMax).EndInit();
@@ -568,7 +594,6 @@
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             panel3.ResumeLayout(false);
-            panel3.PerformLayout();
             ResumeLayout(false);
         }
 
