@@ -90,14 +90,6 @@ namespace FinanceSandtner.Forms
             }
         }
 
-        private enum PredictionHorizon
-        {
-            Week,
-            Month,
-            Quarter,
-            Year
-        }
-
         private PredictionHorizon GetSelectedHorizon()
         {
             if (_rbYear.Checked) return PredictionHorizon.Year;
