@@ -20,18 +20,6 @@ namespace FinanceSandtner
         {
             InitializeComponent();
 
-            dataGridViewTransaction.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewTransaction.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            this.FormBorderStyle = FormBorderStyle.Sizable;
-            dataGridViewTransaction.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewTransaction.MultiSelect = false;
-            dataGridViewTransaction.RowHeadersVisible = false;
-            dataGridViewTransaction.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
-            dataGridViewTransaction.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewTransaction.GridColor = Color.LightGray;
-            dataGridViewTransaction.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
-            dataGridViewTransaction.DefaultCellStyle.SelectionForeColor = Color.Black;
-
             pnlFilter.Visible = false;
 
             btnToggleFilter.Click += btnToggleFilter_Click;
@@ -182,7 +170,9 @@ namespace FinanceSandtner
             if (dataGridViewTransaction.Columns["Id"] != null)
                 dataGridViewTransaction.Columns["Id"].Visible = false;
 
-            labelLeftOver.Text = $"Celkový zůstatek:\n {_transactionService.SumRemaining():N2} Kč";
+            _ = _transactionService.SumRemaining() < 0 ? labelLeftOver.ForeColor = Color.Red : labelLeftOver.ForeColor = Color.Black;
+            var remaining = _transactionService.SumRemaining();
+            labelLeftOver.Text = $"Celkový zůstatek:\n {remaining:N2} Kč";
 
             if (filtered.Any())
             {

@@ -48,6 +48,8 @@ namespace FinanceSandtner.Forms
             Controls.Add(topPanel);
 
             ShowPieByCategory();
+
+            btnPrediction.BackColor = SystemColors.InactiveCaption;
         }
 
         private void InitializeRadioPanel()

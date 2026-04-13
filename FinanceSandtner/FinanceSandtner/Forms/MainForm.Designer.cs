@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             dataGridViewTransaction = new DataGridView();
             btnAddTransaction = new Button();
@@ -81,13 +82,20 @@
             // dataGridViewTransaction
             // 
             dataGridViewTransaction.AllowDrop = true;
-            dataGridViewTransaction.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataGridViewTransaction.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridViewCellStyle1.BackColor = SystemColors.ButtonFace;
+            dataGridViewTransaction.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewTransaction.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewTransaction.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewTransaction.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataGridViewTransaction.BackgroundColor = SystemColors.ScrollBar;
+            dataGridViewTransaction.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewTransaction.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewTransaction.GridColor = Color.LightGray;
             dataGridViewTransaction.Location = new Point(0, 29);
+            dataGridViewTransaction.MultiSelect = false;
             dataGridViewTransaction.Name = "dataGridViewTransaction";
+            dataGridViewTransaction.RowHeadersVisible = false;
+            dataGridViewTransaction.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewTransaction.Size = new Size(753, 156);
             dataGridViewTransaction.TabIndex = 0;
             dataGridViewTransaction.CellDoubleClick += dataGridViewTransaction_CellDoubleClick_1;
@@ -416,6 +424,8 @@
             // 
             tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel1.BackColor = SystemColors.InactiveCaption;
+            tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Outset;
             tableLayoutPanel1.ColumnCount = 4;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.000618F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.0006256F));
@@ -443,11 +453,11 @@
             lblAvgExp.Dock = DockStyle.Fill;
             lblAvgExp.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblAvgExp.ForeColor = Color.Black;
-            lblAvgExp.Location = new Point(345, 75);
+            lblAvgExp.Location = new Point(344, 76);
             lblAvgExp.Name = "lblAvgExp";
-            lblAvgExp.Size = new Size(109, 75);
+            lblAvgExp.Size = new Size(108, 72);
             lblAvgExp.TabIndex = 7;
-            lblAvgExp.Text = "label6";
+            lblAvgExp.Text = "lblAvgExp";
             lblAvgExp.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblThisMonthExp
@@ -456,11 +466,11 @@
             lblThisMonthExp.Dock = DockStyle.Fill;
             lblThisMonthExp.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblThisMonthExp.ForeColor = Color.Black;
-            lblThisMonthExp.Location = new Point(231, 75);
+            lblThisMonthExp.Location = new Point(231, 76);
             lblThisMonthExp.Name = "lblThisMonthExp";
-            lblThisMonthExp.Size = new Size(108, 75);
+            lblThisMonthExp.Size = new Size(105, 72);
             lblThisMonthExp.TabIndex = 6;
-            lblThisMonthExp.Text = "label5";
+            lblThisMonthExp.Text = "lblThisMonthExp";
             lblThisMonthExp.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblTopEarner
@@ -469,11 +479,11 @@
             lblTopEarner.Dock = DockStyle.Fill;
             lblTopEarner.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblTopEarner.ForeColor = Color.Black;
-            lblTopEarner.Location = new Point(117, 75);
+            lblTopEarner.Location = new Point(118, 76);
             lblTopEarner.Name = "lblTopEarner";
-            lblTopEarner.Size = new Size(108, 75);
+            lblTopEarner.Size = new Size(105, 72);
             lblTopEarner.TabIndex = 5;
-            lblTopEarner.Text = "label4";
+            lblTopEarner.Text = "lblTopEarner";
             lblTopEarner.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblTopSpender
@@ -482,11 +492,11 @@
             lblTopSpender.Dock = DockStyle.Fill;
             lblTopSpender.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblTopSpender.ForeColor = Color.Black;
-            lblTopSpender.Location = new Point(3, 75);
+            lblTopSpender.Location = new Point(5, 76);
             lblTopSpender.Name = "lblTopSpender";
-            lblTopSpender.Size = new Size(108, 75);
+            lblTopSpender.Size = new Size(105, 72);
             lblTopSpender.TabIndex = 4;
-            lblTopSpender.Text = "label3";
+            lblTopSpender.Text = "lblTopSpender";
             lblTopSpender.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblTopIncome
@@ -495,9 +505,9 @@
             lblTopIncome.Dock = DockStyle.Fill;
             lblTopIncome.Font = new Font("Ebrima", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 238);
             lblTopIncome.ForeColor = Color.Black;
-            lblTopIncome.Location = new Point(3, 0);
+            lblTopIncome.Location = new Point(5, 2);
             lblTopIncome.Name = "lblTopIncome";
-            lblTopIncome.Size = new Size(108, 75);
+            lblTopIncome.Size = new Size(105, 72);
             lblTopIncome.TabIndex = 0;
             lblTopIncome.Text = "lblTopIncome";
             lblTopIncome.TextAlign = ContentAlignment.MiddleCenter;
@@ -508,9 +518,9 @@
             lblTopExpense.Dock = DockStyle.Fill;
             lblTopExpense.Font = new Font("Ebrima", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 238);
             lblTopExpense.ForeColor = Color.Black;
-            lblTopExpense.Location = new Point(117, 0);
+            lblTopExpense.Location = new Point(118, 2);
             lblTopExpense.Name = "lblTopExpense";
-            lblTopExpense.Size = new Size(108, 75);
+            lblTopExpense.Size = new Size(105, 72);
             lblTopExpense.TabIndex = 1;
             lblTopExpense.Text = "lblTopExpence";
             lblTopExpense.TextAlign = ContentAlignment.MiddleCenter;
@@ -521,9 +531,9 @@
             lblTopCat.Dock = DockStyle.Fill;
             lblTopCat.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblTopCat.ForeColor = Color.Black;
-            lblTopCat.Location = new Point(231, 0);
+            lblTopCat.Location = new Point(231, 2);
             lblTopCat.Name = "lblTopCat";
-            lblTopCat.Size = new Size(108, 75);
+            lblTopCat.Size = new Size(105, 72);
             lblTopCat.TabIndex = 2;
             lblTopCat.Text = "lblTopCat";
             lblTopCat.TextAlign = ContentAlignment.MiddleCenter;
@@ -534,9 +544,9 @@
             lblTurnover.Dock = DockStyle.Fill;
             lblTurnover.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             lblTurnover.ForeColor = Color.Black;
-            lblTurnover.Location = new Point(345, 0);
+            lblTurnover.Location = new Point(344, 2);
             lblTurnover.Name = "lblTurnover";
-            lblTurnover.Size = new Size(109, 75);
+            lblTurnover.Size = new Size(108, 72);
             lblTurnover.TabIndex = 3;
             lblTurnover.Text = "lblTurnOver";
             lblTurnover.TextAlign = ContentAlignment.MiddleCenter;
@@ -547,6 +557,7 @@
             labelLeftOver.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             labelLeftOver.AutoEllipsis = true;
             labelLeftOver.AutoSize = true;
+            labelLeftOver.BackColor = Color.White;
             labelLeftOver.Font = new Font("Ebrima", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 238);
             labelLeftOver.ForeColor = Color.Black;
             labelLeftOver.Location = new Point(13, 23);

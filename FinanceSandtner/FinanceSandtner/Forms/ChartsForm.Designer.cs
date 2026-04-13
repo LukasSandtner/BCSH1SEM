@@ -39,57 +39,62 @@
             // 
             // btnPieByCategory
             // 
+            btnPieByCategory.BackColor = SystemColors.InactiveCaption;
             btnPieByCategory.Dock = DockStyle.Left;
             btnPieByCategory.Location = new Point(0, 0);
             btnPieByCategory.Name = "btnPieByCategory";
             btnPieByCategory.Size = new Size(210, 711);
             btnPieByCategory.TabIndex = 0;
             btnPieByCategory.Text = "Koláč – výdaje podle kategorií";
-            btnPieByCategory.UseVisualStyleBackColor = true;
+            btnPieByCategory.UseVisualStyleBackColor = false;
             btnPieByCategory.Click += btnPieCategory_Click;
             // 
             // btnPieByCategoryType
             // 
+            btnPieByCategoryType.BackColor = SystemColors.InactiveCaption;
             btnPieByCategoryType.Dock = DockStyle.Left;
             btnPieByCategoryType.Location = new Point(210, 0);
             btnPieByCategoryType.Name = "btnPieByCategoryType";
             btnPieByCategoryType.Size = new Size(240, 711);
             btnPieByCategoryType.TabIndex = 1;
             btnPieByCategoryType.Text = "Koláč – výdaje podle typu kategorie";
-            btnPieByCategoryType.UseVisualStyleBackColor = true;
+            btnPieByCategoryType.UseVisualStyleBackColor = false;
             btnPieByCategoryType.Click += btnPieByCategoryType_Click;
             // 
             // btnLineBalanceOverTime
             // 
+            btnLineBalanceOverTime.BackColor = SystemColors.InactiveCaption;
             btnLineBalanceOverTime.Dock = DockStyle.Left;
             btnLineBalanceOverTime.Location = new Point(450, 0);
             btnLineBalanceOverTime.Name = "btnLineBalanceOverTime";
             btnLineBalanceOverTime.Size = new Size(230, 711);
             btnLineBalanceOverTime.TabIndex = 2;
             btnLineBalanceOverTime.Text = "Spojnice – vývoj zůstatku v čase";
-            btnLineBalanceOverTime.UseVisualStyleBackColor = true;
+            btnLineBalanceOverTime.UseVisualStyleBackColor = false;
             btnLineBalanceOverTime.Click += btnLineBalanceOverTime_Click;
             // 
             // btnStackedByMonth
             // 
+            btnStackedByMonth.BackColor = SystemColors.InactiveCaption;
             btnStackedByMonth.Dock = DockStyle.Left;
             btnStackedByMonth.Location = new Point(680, 0);
             btnStackedByMonth.Name = "btnStackedByMonth";
             btnStackedByMonth.Size = new Size(240, 711);
             btnStackedByMonth.TabIndex = 3;
             btnStackedByMonth.Text = "Skládaný – příjmy vs. výdaje (měsíce)";
-            btnStackedByMonth.UseVisualStyleBackColor = true;
+            btnStackedByMonth.UseVisualStyleBackColor = false;
             btnStackedByMonth.Click += btnStackedByMonth_Click;
             // 
             // btnMembersIncomeExpense
             // 
+            btnMembersIncomeExpense.BackColor = SystemColors.InactiveCaption;
             btnMembersIncomeExpense.Dock = DockStyle.Left;
             btnMembersIncomeExpense.Location = new Point(920, 0);
             btnMembersIncomeExpense.Name = "btnMembersIncomeExpense";
             btnMembersIncomeExpense.Size = new Size(210, 711);
             btnMembersIncomeExpense.TabIndex = 4;
             btnMembersIncomeExpense.Text = "Členové – příjmy a výdaje";
-            btnMembersIncomeExpense.UseVisualStyleBackColor = true;
+            btnMembersIncomeExpense.UseVisualStyleBackColor = false;
             btnMembersIncomeExpense.Click += btnMembersIncomeExpense_Click;
             // 
             // btnPrediction
