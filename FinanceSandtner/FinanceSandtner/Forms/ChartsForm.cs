@@ -35,7 +35,29 @@ namespace FinanceSandtner.Forms
             _rbYear = new RadioButton { Text = "Rok", AutoSize = true };
 
             _rbWeek.Checked = true;
-            rbPanel.Controls.Add(new Label { Text = "Horizont:", AutoSize = true, Padding = new Padding(0, 3, 8, 0) });
+
+            InitializeRadioPanel();
+            var topPanel = CreateTopPanel();
+
+            _pieChart = CreatePieChart();
+            _cartesianChart = CreateCartesianChart();
+
+            Controls.Clear();
+            Controls.Add(_cartesianChart);
+            Controls.Add(_pieChart);
+            Controls.Add(topPanel);
+
+            ShowPieByCategory();
+        }
+
+        private void InitializeRadioPanel()
+        {
+            rbPanel.Controls.Add(new Label
+            {
+                Text = "Horizont:",
+                AutoSize = true,
+                Padding = new Padding(0, 3, 8, 0)
+            });
             rbPanel.Controls.Add(_rbWeek);
             rbPanel.Controls.Add(_rbMonth);
             rbPanel.Controls.Add(_rbQuarter);
@@ -45,7 +67,10 @@ namespace FinanceSandtner.Forms
             _rbMonth.CheckedChanged += (_, __) => { if (_rbMonth.Checked) TryRefreshPredictionIfVisible(); };
             _rbQuarter.CheckedChanged += (_, __) => { if (_rbQuarter.Checked) TryRefreshPredictionIfVisible(); };
             _rbYear.CheckedChanged += (_, __) => { if (_rbYear.Checked) TryRefreshPredictionIfVisible(); };
+        }
 
+        private Panel CreateTopPanel()
+        {
             var topPanel = new Panel
             {
                 Dock = DockStyle.Top,
@@ -60,25 +85,22 @@ namespace FinanceSandtner.Forms
             topPanel.Controls.Add(btnStackedByMonth);
             topPanel.Controls.Add(btnPrediction);
 
-            _pieChart = new PieChart
-            {
-                Dock = DockStyle.Fill,
-                LegendPosition = LiveChartsCore.Measure.LegendPosition.Right
-            };
-
-            _cartesianChart = new CartesianChart
-            {
-                Dock = DockStyle.Fill,
-                LegendPosition = LiveChartsCore.Measure.LegendPosition.Right
-            };
-
-            Controls.Clear();
-            Controls.Add(_cartesianChart);
-            Controls.Add(_pieChart);
-            Controls.Add(topPanel);
-
-            ShowPieByCategory();
+            return topPanel;
         }
+
+        private static PieChart CreatePieChart() =>
+            new PieChart
+            {
+                Dock = DockStyle.Fill,
+                LegendPosition = LiveChartsCore.Measure.LegendPosition.Right
+            };
+
+        private static CartesianChart CreateCartesianChart() =>
+            new CartesianChart
+            {
+                Dock = DockStyle.Fill,
+                LegendPosition = LiveChartsCore.Measure.LegendPosition.Right
+            };
 
         private void SetPredictionUiVisible(bool visible) => rbPanel.Visible = visible;
 
@@ -114,7 +136,8 @@ namespace FinanceSandtner.Forms
             var transactions = _transactionService.AllTransaction();
             if (!transactions.Any())
             {
-                MessageBox.Show("Nejsou dostupná žádná data pro predikci.", "Predikce", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupná žádná data pro predikci.", "Predikce",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -123,40 +146,119 @@ namespace FinanceSandtner.Forms
             var history = BuildDailyBalanceSeries(ordered);
             if (history.Count == 0)
             {
-                MessageBox.Show("Nejsou dostupná žádná data pro predikci.", "Predikce", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupná žádná data pro predikci.", "Predikce",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            var lastDate = history[^1].Date;
-            var lastBalance = history[^1].Balance;
-
+            var lastPoint = history[^1];
             var avgDailyChange = ComputeAverageDailyChange(history, lookbackDays: 90);
-
             var horizonDays = GetHorizonDays(GetSelectedHorizon());
 
+            var labels = BuildPredictionDateLabels(lastPoint.Date, horizonDays);
+            var yAll = BuildPredictionValues(lastPoint.Balance, avgDailyChange, horizonDays);
+
+            var (minYWithPad, maxYWithPad) = ComputeYRangeWithPadding(yAll);
+
+            ConfigurePredictionChart(labels, yAll, horizonDays, minYWithPad, maxYWithPad);
+        }
+
+        private static string[] BuildPredictionDateLabels(DateTime lastDate, int horizonDays)
+        {
             var startDate = lastDate;
-            var endDate = lastDate.AddDays(horizonDays);
+            var allDates = Enumerable.Range(0, horizonDays + 1)
+                .Select(i => startDate.AddDays(i))
+                .ToList();
 
-            var allDates = Enumerable.Range(0, horizonDays + 1).Select(i => startDate.AddDays(i)).ToList();
-            var labels = allDates.Select(d => d.ToShortDateString()).ToArray();
+            return allDates.Select(d => d.ToShortDateString()).ToArray();
+        }
 
+        private static decimal[] BuildPredictionValues(decimal lastBalance, decimal avgDailyChange, int horizonDays)
+        {
             var yAll = new decimal[horizonDays + 1];
             yAll[0] = lastBalance;
-            for (int i = 1; i <= horizonDays; i++)
-                yAll[i] = lastBalance + avgDailyChange * i;
 
-            var minY = yAll.Min();
-            var maxY = yAll.Max();
+            for (int i = 1; i <= horizonDays; i++)
+            {
+                yAll[i] = Math.Round(lastBalance + avgDailyChange * i, 2);
+            }
+
+            return yAll;
+        }
+
+        private static (decimal Min, decimal Max) ComputeYRangeWithPadding(decimal[] values)
+        {
+            var minY = values.Min();
+            var maxY = values.Max();
             var range = maxY - minY;
             var pad = range == 0 ? Math.Max(100m, Math.Abs(maxY) * 0.1m) : range * 0.10m;
 
-            var minYWithPad = minY - pad;
-            var maxYWithPad = maxY + pad;
+            return (minY - pad, maxY + pad);
+        }
 
+        private void ConfigurePredictionChart(
+            string[] labels,
+            decimal[] yAll,
+            int horizonDays,
+            decimal minYWithPad,
+            decimal maxYWithPad)
+        {
             _cartesianChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Hidden;
 
             var series = new List<ISeries>();
+            var predictionPoints = BuildPredictionPoints(horizonDays, yAll);
 
+            var mainSeries = CreateMainPredictionSeries(predictionPoints, labels);
+            series.Add(mainSeries);
+
+            AddColoredSegments(series, horizonDays, yAll);
+            AddZeroLine(series, horizonDays);
+            AddVerticalMarkerLines(series, horizonDays, minYWithPad, maxYWithPad);
+
+            ConfigurePredictionAxes(labels, minYWithPad, maxYWithPad);
+
+            _cartesianChart.Series = series.ToArray();
+            _cartesianChart.TooltipFindingStrategy = LiveChartsCore.Measure.TooltipFindingStrategy.CompareOnlyX;
+
+            _cartesianChart.Visible = true;
+            _pieChart.Visible = false;
+        }
+
+        private static LiveChartsCore.Defaults.ObservablePoint[] BuildPredictionPoints(int horizonDays, decimal[] yAll) =>
+            Enumerable.Range(0, horizonDays + 1)
+                .Select(i => new LiveChartsCore.Defaults.ObservablePoint(i, (double)yAll[i]))
+                .ToArray();
+
+        private static LineSeries<LiveChartsCore.Defaults.ObservablePoint> CreateMainPredictionSeries(
+            LiveChartsCore.Defaults.ObservablePoint[] predictionPoints,
+            string[] dateLabels)
+        {
+            return new LineSeries<LiveChartsCore.Defaults.ObservablePoint>
+            {
+                Name = "Predikce",
+                Values = predictionPoints,
+                Fill = null,
+                GeometrySize = 8,
+                Stroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
+                XToolTipLabelFormatter = cp =>
+                {
+                    int index = (int)Math.Round((double)cp.Model.X);
+                    if (index < 0 || index >= dateLabels.Length) return string.Empty;
+
+                    var dateText = dateLabels[index];
+
+                    if (index == 0)
+                        return $"{dateText} (počáteční)";
+                    if (index == dateLabels.Length - 1)
+                        return $"{dateText} (konečná)";
+
+                    return $"{dateText}";
+                }
+            };
+        }
+
+        private static void AddColoredSegments(List<ISeries> series, int horizonDays, decimal[] yAll)
+        {
             var upPaint = new SolidColorPaint(SKColors.ForestGreen, 3);
             var downPaint = new SolidColorPaint(SKColors.IndianRed, 3);
             var flatPaint = new SolidColorPaint(SKColors.Gray, 3);
@@ -168,10 +270,10 @@ namespace FinanceSandtner.Forms
 
                 var paint = cur > prev ? upPaint : cur < prev ? downPaint : flatPaint;
 
-                var segValues = new LiveChartsCore.Defaults.ObservablePoint[]
+                var segValues = new[]
                 {
-                    new(i - 1, (double)prev),
-                    new(i, (double)cur)
+                    new LiveChartsCore.Defaults.ObservablePoint(i - 1, (double)prev),
+                    new LiveChartsCore.Defaults.ObservablePoint(i, (double)cur)
                 };
 
                 series.Add(new LineSeries<LiveChartsCore.Defaults.ObservablePoint>
@@ -180,10 +282,15 @@ namespace FinanceSandtner.Forms
                     Values = segValues,
                     Fill = null,
                     GeometrySize = 0,
-                    Stroke = paint
+                    Stroke = paint,
+                    XToolTipLabelFormatter = null,
+                    IsHoverable = false
                 });
             }
+        }
 
+        private static void AddZeroLine(List<ISeries> series, int horizonDays)
+        {
             series.Add(new LineSeries<LiveChartsCore.Defaults.ObservablePoint>
             {
                 Name = null,
@@ -194,13 +301,31 @@ namespace FinanceSandtner.Forms
                 },
                 Fill = null,
                 GeometrySize = 0,
-                Stroke = new SolidColorPaint(SKColors.Orange, 2)
+                Stroke = new SolidColorPaint(SKColors.Orange, 2),
+                XToolTipLabelFormatter = null,
+                IsHoverable = false
             });
+        }
 
-            series.AddRange(CreateVerticalMarkerLines(horizonDays, minYWithPad, maxYWithPad));
+        private static void AddVerticalMarkerLines(
+            List<ISeries> series,
+            int horizonDays,
+            decimal minYWithPad,
+            decimal maxYWithPad)
+        {
+            foreach (var s in CreateVerticalMarkerLines(horizonDays, minYWithPad, maxYWithPad))
+            {
+                if (s is LineSeries<LiveChartsCore.Defaults.ObservablePoint> ls)
+                {
+                    ls.XToolTipLabelFormatter = null;
+                    ls.IsHoverable = false;
+                }
+                series.Add(s);
+            }
+        }
 
-            _cartesianChart.Series = series.ToArray();
-
+        private void ConfigurePredictionAxes(string[] labels, decimal minYWithPad, decimal maxYWithPad)
+        {
             _cartesianChart.XAxes = new[]
             {
                 new Axis
@@ -221,11 +346,6 @@ namespace FinanceSandtner.Forms
                     MaxLimit = (double)maxYWithPad
                 }
             };
-
-            _cartesianChart.TooltipFindingStrategy = LiveChartsCore.Measure.TooltipFindingStrategy.CompareOnlyX;
-
-            _cartesianChart.Visible = true;
-            _pieChart.Visible = false;
         }
 
         private static IEnumerable<ISeries> CreateVerticalMarkerLines(int horizonDays, decimal minY, decimal maxY)
@@ -238,7 +358,7 @@ namespace FinanceSandtner.Forms
                 Values = new[]
                 {
                     new LiveChartsCore.Defaults.ObservablePoint(0, (double)minY),
-                    new LiveChartsCore.Defaults.ObservablePoint(0, (double)maxY),
+                    new LiveChartsCore.Defaults.ObservablePoint(0, (double)maxY)
                 },
                 Fill = null,
                 GeometrySize = 0,
@@ -251,7 +371,7 @@ namespace FinanceSandtner.Forms
                 Values = new[]
                 {
                     new LiveChartsCore.Defaults.ObservablePoint(horizonDays, (double)minY),
-                    new LiveChartsCore.Defaults.ObservablePoint(horizonDays, (double)maxY),
+                    new LiveChartsCore.Defaults.ObservablePoint(horizonDays, (double)maxY)
                 },
                 Fill = null,
                 GeometrySize = 0,
@@ -259,7 +379,8 @@ namespace FinanceSandtner.Forms
             };
         }
 
-        private static List<(DateTime Date, decimal Balance)> BuildDailyBalanceSeries(List<FinanceSandtner.Models.Transaction> ordered)
+        private static List<(DateTime Date, decimal Balance)> BuildDailyBalanceSeries(
+            List<FinanceSandtner.Models.Transaction> ordered)
         {
             var points = new List<(DateTime Date, decimal Balance)>();
             decimal running = 0;
@@ -277,7 +398,9 @@ namespace FinanceSandtner.Forms
                 .ToList();
         }
 
-        private static decimal ComputeAverageDailyChange(List<(DateTime Date, decimal Balance)> history, int lookbackDays)
+        private static decimal ComputeAverageDailyChange(
+            List<(DateTime Date, decimal Balance)> history,
+            int lookbackDays)
         {
             if (history.Count < 2) return 0m;
 
@@ -306,14 +429,13 @@ namespace FinanceSandtner.Forms
 
         private void ShowPieByCategory()
         {
-            SetPredictionUiVisible(false);
-            _cartesianChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Right;
+            PrepareChartForPie();
 
             var transactions = _transactionService.AllTransaction();
-
             if (!transactions.Any())
             {
-                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu.", "Grafy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu.", "Grafy",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -326,7 +448,8 @@ namespace FinanceSandtner.Forms
 
             if (!expensesByCategory.Any())
             {
-                MessageBox.Show("Nejsou dostupné žádné výdaje pro zobrazení koláčového grafu.", "Grafy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupné žádné výdaje pro zobrazení koláčového grafu.", "Grafy",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -335,20 +458,18 @@ namespace FinanceSandtner.Forms
                 .Cast<ISeries>()
                 .ToArray();
 
-            _pieChart.Visible = true;
-            _cartesianChart.Visible = false;
+            ShowPieChart();
         }
 
         private void ShowPieByCategoryType()
         {
-            SetPredictionUiVisible(false);
-            _cartesianChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Right;
+            PrepareChartForPie();
 
             var transactions = _transactionService.AllTransaction();
-
             if (!transactions.Any())
             {
-                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu.", "Grafy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu.", "Grafy",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -361,7 +482,8 @@ namespace FinanceSandtner.Forms
 
             if (!expensesByType.Any())
             {
-                MessageBox.Show("Nejsou dostupné žádné výdaje pro zobrazení koláčového grafu podle typu.", "Grafy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupné žádné výdaje pro zobrazení koláčového grafu podle typu.", "Grafy",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -370,39 +492,34 @@ namespace FinanceSandtner.Forms
                 .Cast<ISeries>()
                 .ToArray();
 
+            ShowPieChart();
+        }
+
+        private void PrepareChartForPie()
+        {
+            SetPredictionUiVisible(false);
+            _cartesianChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Right;
+        }
+
+        private void ShowPieChart()
+        {
             _pieChart.Visible = true;
             _cartesianChart.Visible = false;
         }
 
         private void ShowLineBalanceOverTime()
         {
-            SetPredictionUiVisible(false);
-            _cartesianChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Right;
+            PrepareCartesianChart();
 
             var transactions = _transactionService.AllTransaction();
-
             if (!transactions.Any())
             {
-                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu.", "Grafy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu.", "Grafy",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            var ordered = transactions.OrderBy(t => t.Date).ToList();
-
-            var points = new List<(DateTime Date, decimal Balance)>();
-            decimal running = 0;
-
-            foreach (var t in ordered)
-            {
-                running += t.TypeOfTansaction == "Příjem" ? t.Amount : -t.Amount;
-                points.Add((t.Date.Date, running));
-            }
-
-            var byDate = points
-                .GroupBy(p => p.Date)
-                .Select(g => new { Date = g.Key, Balance = g.Last().Balance })
-                .OrderBy(x => x.Date)
-                .ToList();
+            var byDate = BuildBalanceByDate(transactions);
 
             _cartesianChart.Series = new ISeries[]
             {
@@ -425,43 +542,29 @@ namespace FinanceSandtner.Forms
 
             _cartesianChart.YAxes = new[]
             {
-                new Axis
-                {
-                    Name = "Kč"
-                }
+                new Axis { Name = "Kč" }
             };
 
-            _cartesianChart.Visible = true;
-            _pieChart.Visible = false;
+            ShowCartesianChart();
         }
 
         private void ShowStackedByMonth()
         {
-            SetPredictionUiVisible(false);
-            _cartesianChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Right;
+            PrepareCartesianChart();
 
             var transactions = _transactionService.AllTransaction();
-
             if (!transactions.Any())
             {
-                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu.", "Grafy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu.", "Grafy",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            var byMonth = transactions
-                .GroupBy(t => new { t.Date.Year, t.Date.Month })
-                .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
-                .Select(g => new
-                {
-                    Label = $"{g.Key.Month:00}/{g.Key.Year}",
-                    Income = g.Where(t => t.TypeOfTansaction == "Příjem").Sum(t => t.Amount),
-                    Expense = g.Where(t => t.TypeOfTansaction == "Výdaj").Sum(t => t.Amount)
-                })
-                .ToList();
-
+            var byMonth = BuildMonthlyAggregation(transactions);
             if (!byMonth.Any())
             {
-                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení měsíčního grafu.", "Grafy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení měsíčního grafu.", "Grafy",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -485,43 +588,29 @@ namespace FinanceSandtner.Forms
 
             _cartesianChart.YAxes = new[]
             {
-                new Axis
-                {
-                    Name = "Kč"
-                }
+                new Axis { Name = "Kč" }
             };
 
-            _cartesianChart.Visible = true;
-            _pieChart.Visible = false;
+            ShowCartesianChart();
         }
 
         private void ShowMembersIncomeExpense()
         {
-            SetPredictionUiVisible(false);
-            _cartesianChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Right;
+            PrepareCartesianChart();
 
             var transactions = _transactionService.AllTransaction();
-
             if (!transactions.Any())
             {
-                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu.", "Grafy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu podle členů.", "Grafy",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            var byMember = transactions
-                .GroupBy(t => t.Member?.Name ?? "Neznámý")
-                .Select(g => new
-                {
-                    Member = g.Key,
-                    Income = g.Where(t => t.TypeOfTansaction == "Příjem").Sum(t => t.Amount),
-                    Expense = g.Where(t => t.TypeOfTansaction == "Výdaj").Sum(t => t.Amount)
-                })
-                .OrderByDescending(x => x.Income + x.Expense)
-                .ToList();
-
+            var byMember = BuildMemberAggregation(transactions);
             if (!byMember.Any())
             {
-                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu podle členů.", "Grafy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nejsou dostupná žádná data pro zobrazení grafu podle členů.", "Grafy",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -546,14 +635,71 @@ namespace FinanceSandtner.Forms
 
             _cartesianChart.YAxes = new[]
             {
-                new Axis
-                {
-                    Name = "Kč"
-                }
+                new Axis { Name = "Kč" }
             };
 
+            ShowCartesianChart();
+        }
+
+        private void PrepareCartesianChart()
+        {
+            SetPredictionUiVisible(false);
+            _cartesianChart.LegendPosition = LiveChartsCore.Measure.LegendPosition.Right;
+        }
+
+        private void ShowCartesianChart()
+        {
             _cartesianChart.Visible = true;
             _pieChart.Visible = false;
+        }
+
+        private static List<(DateTime Date, decimal Balance)> BuildBalanceByDate(
+            IEnumerable<FinanceSandtner.Models.Transaction> transactions)
+        {
+            var ordered = transactions.OrderBy(t => t.Date).ToList();
+            var points = new List<(DateTime Date, decimal Balance)>();
+            decimal running = 0;
+
+            foreach (var t in ordered)
+            {
+                running += t.TypeOfTansaction == "Příjem" ? t.Amount : -t.Amount;
+                points.Add((t.Date.Date, running));
+            }
+
+            return points
+                .GroupBy(p => p.Date)
+                .Select(g => (Date: g.Key, Balance: g.Last().Balance))
+                .OrderBy(x => x.Date)
+                .ToList();
+        }
+
+        private static List<(string Label, decimal Income, decimal Expense)> BuildMonthlyAggregation(
+            IEnumerable<FinanceSandtner.Models.Transaction> transactions)
+        {
+            return transactions
+                .GroupBy(t => new { t.Date.Year, t.Date.Month })
+                .OrderBy(g => g.Key.Year)
+                .ThenBy(g => g.Key.Month)
+                .Select(g => (
+                    Label: $"{g.Key.Month:00}/{g.Key.Year}",
+                    Income: g.Where(t => t.TypeOfTansaction == "Příjem").Sum(t => t.Amount),
+                    Expense: g.Where(t => t.TypeOfTansaction == "Výdaj").Sum(t => t.Amount)
+                ))
+                .ToList();
+        }
+
+        private static List<(string Member, decimal Income, decimal Expense)> BuildMemberAggregation(
+            IEnumerable<FinanceSandtner.Models.Transaction> transactions)
+        {
+            return transactions
+                .GroupBy(t => t.Member?.Name ?? "Neznámý")
+                .Select(g => (
+                    Member: g.Key,
+                    Income: g.Where(t => t.TypeOfTansaction == "Příjem").Sum(t => t.Amount),
+                    Expense: g.Where(t => t.TypeOfTansaction == "Výdaj").Sum(t => t.Amount)
+                ))
+                .OrderByDescending(x => x.Income + x.Expense)
+                .ToList();
         }
 
         private void btnPieCategory_Click(object sender, EventArgs e)
