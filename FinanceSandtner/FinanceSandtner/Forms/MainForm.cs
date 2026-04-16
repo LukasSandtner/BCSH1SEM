@@ -39,7 +39,10 @@ namespace FinanceSandtner
 
             InitAmountSliders();
             LoadFilterControls();
+
             LoadData();
+            UpdateAmountSliderRangeFromTransactions(); 
+
             ApplyFilters();
         }
 
@@ -58,12 +61,37 @@ namespace FinanceSandtner
         private void InitAmountSliders()
         {
             trkAmountMin.Minimum = 0;
-            trkAmountMin.Maximum = 100000;
             trkAmountMax.Minimum = 0;
+
+            trkAmountMin.Maximum = 100000;
             trkAmountMax.Maximum = 100000;
 
             trkAmountMin.Value = trkAmountMin.Minimum;
             trkAmountMax.Value = trkAmountMax.Maximum;
+
+            lblAmountMin.Text = $"Min: {trkAmountMin.Value} Kč";
+            lblAmountMax.Text = $"Max: {trkAmountMax.Value} Kč";
+        }
+
+        private void UpdateAmountSliderRangeFromTransactions()
+        {
+            var maxDecimal = (_allTransactions != null && _allTransactions.Any())
+                ? _allTransactions.Max(t => t.Amount)
+                : 0m;
+
+            if (maxDecimal < 0m) maxDecimal = 0m;
+            if (maxDecimal > int.MaxValue) maxDecimal = int.MaxValue;
+
+            var maxInt = (int)Math.Ceiling(maxDecimal);
+
+            if (maxInt < trkAmountMin.Minimum) maxInt = trkAmountMin.Minimum;
+
+            trkAmountMin.Maximum = maxInt;
+            trkAmountMax.Maximum = maxInt;
+
+            if (trkAmountMin.Value > trkAmountMin.Maximum) trkAmountMin.Value = trkAmountMin.Maximum;
+            if (trkAmountMax.Value > trkAmountMax.Maximum) trkAmountMax.Value = trkAmountMax.Maximum;
+            if (trkAmountMin.Value > trkAmountMax.Value) trkAmountMin.Value = trkAmountMax.Value;
 
             lblAmountMin.Text = $"Min: {trkAmountMin.Value} Kč";
             lblAmountMax.Text = $"Max: {trkAmountMax.Value} Kč";
@@ -235,6 +263,7 @@ namespace FinanceSandtner
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
+                UpdateAmountSliderRangeFromTransactions();
                 ApplyFilters();
             }
         }
@@ -263,6 +292,7 @@ namespace FinanceSandtner
                 {
                     _transactionService.Delete(selectedId);
                     LoadData();
+                    UpdateAmountSliderRangeFromTransactions();
                     ApplyFilters();
                 }
             }
@@ -286,6 +316,7 @@ namespace FinanceSandtner
                     if (form.ShowDialog() == DialogResult.OK)
                     {
                         LoadData();
+                        UpdateAmountSliderRangeFromTransactions(); 
                         ApplyFilters();
                     }
                 }
@@ -317,6 +348,7 @@ namespace FinanceSandtner
             dtpTo.Checked = false;
 
             LoadData();
+            UpdateAmountSliderRangeFromTransactions();
             ApplyFilters();
         }
     }
