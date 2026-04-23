@@ -2,7 +2,6 @@
 
 Desktopová aplikace pro evidenci finanční situace rodiny. Umožňuje sledovat příjmy a výdaje jednotlivých členů rodiny a poskytuje přehled o celkovém zůstatku rodinných financí.
 
-> - **TODO** Timer při zavření aplikace.
 > - **TODO** Test LiteDB objektů.
 
 ---
@@ -49,6 +48,7 @@ FinanceSandtner/
 │   ├── CategoryForm.cs
 │   └── ChartsForm.cs  
 └── Program.cs
+└── EnumHorizon.cs
 ```
 
 ---
