@@ -28,6 +28,9 @@ Aplikace pracuje se třemi základními entitami:
 
 ---
 
+## Grafy
+
+
 ## Struktura projektu
 
 ```text
@@ -47,7 +50,7 @@ FinanceSandtner/
 │   ├── MemberForm.cs
 │   ├── CategoryForm.cs
 │   └── ChartsForm.cs  
-└── Program.cs
+├── Program.cs
 └── EnumHorizon.cs
 ```
 
