@@ -29,9 +29,6 @@ namespace FinanceSandtner.Services
             }
             return transactions;
         }
-
-        public List<Transaction> TransactionAfterMember(ObjectId clenId) =>
-            AllTransaction().Where(t => t.FamilyMemberId == clenId).ToList();
         public decimal SumRemaining()
         {
             return _db.Transaction.FindAll().Sum(t =>
