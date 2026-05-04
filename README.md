@@ -2,15 +2,13 @@
 
 Desktopová aplikace pro evidenci finanční situace rodiny. Umožňuje sledovat příjmy a výdaje jednotlivých členů rodiny a poskytuje přehled o celkovém zůstatku rodinných financí.
 
-> - **TODO** Test LiteDB objektů.
-
 ---
 
 ## Funkce
 
 - Správa členů rodiny – přidání, editace a mazání členů
 - Správa kategorií příjmů a výdajů
-- Evidence transakcí s přiřazením členu rodiny a kategorii
+- Filtrace transakcí
 - Přehledová tabulka všech transakcí
 - Celkový zůstatek rodinných financí
 - Predikce finančního vývoje na příští období
@@ -30,7 +28,7 @@ Aplikace pracuje se třemi základními entitami:
 
 ## Grafy
 
-Aplikace nabízí několik typů grafů (okno **ChartsForm**) pro rychlý přehled o rodinných financích. Pokud nejsou k dispozici žádná data (nebo žádné výdaje/příjmy pro daný typ grafu), aplikace zobrazí informační hlášku.
+Aplikace nabízí několik typů grafů (okno **ChartsForm**) pro rychlý přehled o rodinných financích. Pokud nejsou k dispozici žádná data, aplikace zobrazí informační hlášku.
 
 ### 1) Koláčový graf: Výdaje podle kategorií
 - **Co zobrazuje:** součet **výdajů** seskupený podle **kategorie** (např. Jídlo, Doprava…).
@@ -43,7 +41,6 @@ Aplikace nabízí několik typů grafů (okno **ChartsForm**) pro rychlý přehl
 ### 3) Spojnicový graf: Zůstatek v čase
 - **Co zobrazuje:** vývoj **kumulativního zůstatku** v čase.
 - **Jak se počítá:** zůstatek se průběžně přičítá/odečítá z transakcí: **Příjem = +částka**, **Výdaj = −částka**.
-- **Osa X:** datum transakce (agregováno po dnech).
 
 ### 4) Skládaný sloupcový graf: Příjmy vs. výdaje po měsících
 - **Co zobrazuje:** měsíční součty **příjmů** a **výdajů** ve formě skládaných sloupců.
@@ -57,10 +54,6 @@ Aplikace nabízí několik typů grafů (okno **ChartsForm**) pro rychlý přehl
 - **Co zobrazuje:** odhad budoucího vývoje zůstatku v čase (series **"Predikce"**).
 - **Horizont:** volitelně **Týden / Měsíc / Čtvrtletí / Rok** (7 / 30 / 90 / 365 dní).
 - **Jak se počítá:** z historie se spočítá **průměrná denní změna** (defaultně z posledních 90 dní, pokud data existují) a ta se lineárně promítne do budoucna.
-- **Vizualizace:**
-  - segmenty čáry jsou barevně odlišeny podle směru (růst / pokles / beze změny),
-  - je vykreslena nulová reference (0 Kč),
-  - jsou doplněny svislé značky pro začátek a konec horizontu.
 
 ## Struktura projektu
 
