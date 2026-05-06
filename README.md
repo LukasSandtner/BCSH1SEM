@@ -100,22 +100,21 @@ FinanceSandtner/
 
 ## Ukázky aplikace
 
-Níže jsou ukázky uživatelského rozhraní a funkcí aplikace:
 
 <p align="center">
-  <p>Hlanví panel aplikace:</p><br>
+  <p>Hlanví panel aplikace:</p>
   <img src="https://github.com/LukasSandtner/BCSH1SEM/raw/main/FinanceSandtner/FinanceSandtner/blob/Sn%C3%ADmek%20obrazovky%202026-05-06%20181741.png" alt="Screenshot 181741" width="600"/><br>
-  <p>Úprava transakce:</p><br>
+  <p>Úprava transakce:</p>
   <img src="https://github.com/LukasSandtner/BCSH1SEM/raw/main/FinanceSandtner/FinanceSandtner/blob/Sn%C3%ADmek%20obrazovky%202026-05-06%20181830.png" alt="Screenshot 181830" width="600"/><br>
-  <p>Vypvoření kategorie:</p><br>
+  <p>Vypvoření kategorie:</p>
   <img src="https://github.com/LukasSandtner/BCSH1SEM/raw/main/FinanceSandtner/FinanceSandtner/blob/Sn%C3%ADmek%20obrazovky%202026-05-06%20181846.png" alt="Screenshot 181846" width="600"/><br>
-  <p>Vytvoření člena:</p><br>
+  <p>Vytvoření člena:</p>
   <img src="https://github.com/LukasSandtner/BCSH1SEM/raw/main/FinanceSandtner/FinanceSandtner/blob/Sn%C3%ADmek%20obrazovky%202026-05-06%20181906.png" alt="Screenshot 181906" width="600"/><br>
-  <p>Vytvoření transakce:</p><br>
+  <p>Vytvoření transakce:</p>
   <img src="https://github.com/LukasSandtner/BCSH1SEM/raw/main/FinanceSandtner/FinanceSandtner/blob/Sn%C3%ADmek%20obrazovky%202026-05-06%20181953.png" alt="Screenshot 181953" width="600"/><br>
-  <p>Odstranění transakce:</p><br>
+  <p>Odstranění transakce:</p>
   <img src="https://github.com/LukasSandtner/BCSH1SEM/raw/main/FinanceSandtner/FinanceSandtner/blob/Sn%C3%ADmek%20obrazovky%202026-05-06%20182011.png" alt="Screenshot 182011" width="600"/><br>
-  <p>Ukončení aplikace:</p><br>
+  <p>Ukončení aplikace:</p>
   <img src="https://github.com/LukasSandtner/BCSH1SEM/raw/main/FinanceSandtner/FinanceSandtner/blob/Sn%C3%ADmek%20obrazovky%202026-05-06%20182029.png" alt="Screenshot 182029" width="600"/><br>
 </p>
 
