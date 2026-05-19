@@ -42,8 +42,9 @@
             btnPieByCategory.BackColor = SystemColors.InactiveCaption;
             btnPieByCategory.Dock = DockStyle.Left;
             btnPieByCategory.Location = new Point(0, 0);
+            btnPieByCategory.Margin = new Padding(3, 4, 3, 4);
             btnPieByCategory.Name = "btnPieByCategory";
-            btnPieByCategory.Size = new Size(210, 711);
+            btnPieByCategory.Size = new Size(240, 953);
             btnPieByCategory.TabIndex = 0;
             btnPieByCategory.Text = "Koláč – výdaje podle kategorií";
             btnPieByCategory.UseVisualStyleBackColor = false;
@@ -53,9 +54,10 @@
             // 
             btnPieByCategoryType.BackColor = SystemColors.InactiveCaption;
             btnPieByCategoryType.Dock = DockStyle.Left;
-            btnPieByCategoryType.Location = new Point(210, 0);
+            btnPieByCategoryType.Location = new Point(240, 0);
+            btnPieByCategoryType.Margin = new Padding(3, 4, 3, 4);
             btnPieByCategoryType.Name = "btnPieByCategoryType";
-            btnPieByCategoryType.Size = new Size(240, 711);
+            btnPieByCategoryType.Size = new Size(274, 953);
             btnPieByCategoryType.TabIndex = 1;
             btnPieByCategoryType.Text = "Koláč – výdaje podle typu kategorie";
             btnPieByCategoryType.UseVisualStyleBackColor = false;
@@ -65,9 +67,10 @@
             // 
             btnLineBalanceOverTime.BackColor = SystemColors.InactiveCaption;
             btnLineBalanceOverTime.Dock = DockStyle.Left;
-            btnLineBalanceOverTime.Location = new Point(450, 0);
+            btnLineBalanceOverTime.Location = new Point(514, 0);
+            btnLineBalanceOverTime.Margin = new Padding(3, 4, 3, 4);
             btnLineBalanceOverTime.Name = "btnLineBalanceOverTime";
-            btnLineBalanceOverTime.Size = new Size(230, 711);
+            btnLineBalanceOverTime.Size = new Size(263, 953);
             btnLineBalanceOverTime.TabIndex = 2;
             btnLineBalanceOverTime.Text = "Spojnice – vývoj zůstatku v čase";
             btnLineBalanceOverTime.UseVisualStyleBackColor = false;
@@ -77,9 +80,10 @@
             // 
             btnStackedByMonth.BackColor = SystemColors.InactiveCaption;
             btnStackedByMonth.Dock = DockStyle.Left;
-            btnStackedByMonth.Location = new Point(680, 0);
+            btnStackedByMonth.Location = new Point(777, 0);
+            btnStackedByMonth.Margin = new Padding(3, 4, 3, 4);
             btnStackedByMonth.Name = "btnStackedByMonth";
-            btnStackedByMonth.Size = new Size(240, 711);
+            btnStackedByMonth.Size = new Size(274, 953);
             btnStackedByMonth.TabIndex = 3;
             btnStackedByMonth.Text = "Skládaný – příjmy vs. výdaje (měsíce)";
             btnStackedByMonth.UseVisualStyleBackColor = false;
@@ -89,9 +93,10 @@
             // 
             btnMembersIncomeExpense.BackColor = SystemColors.InactiveCaption;
             btnMembersIncomeExpense.Dock = DockStyle.Left;
-            btnMembersIncomeExpense.Location = new Point(920, 0);
+            btnMembersIncomeExpense.Location = new Point(1051, 0);
+            btnMembersIncomeExpense.Margin = new Padding(3, 4, 3, 4);
             btnMembersIncomeExpense.Name = "btnMembersIncomeExpense";
-            btnMembersIncomeExpense.Size = new Size(210, 711);
+            btnMembersIncomeExpense.Size = new Size(240, 953);
             btnMembersIncomeExpense.TabIndex = 4;
             btnMembersIncomeExpense.Text = "Členové – příjmy a výdaje";
             btnMembersIncomeExpense.UseVisualStyleBackColor = false;
@@ -100,9 +105,10 @@
             // btnPrediction
             // 
             btnPrediction.Dock = DockStyle.Left;
-            btnPrediction.Location = new Point(1130, 0);
+            btnPrediction.Location = new Point(1291, 0);
+            btnPrediction.Margin = new Padding(3, 4, 3, 4);
             btnPrediction.Name = "btnPrediction";
-            btnPrediction.Size = new Size(190, 711);
+            btnPrediction.Size = new Size(217, 953);
             btnPrediction.TabIndex = 5;
             btnPrediction.Text = "Predikce";
             btnPrediction.UseVisualStyleBackColor = true;
@@ -111,19 +117,20 @@
             // rbPanel
             // 
             rbPanel.Dock = DockStyle.Right;
-            rbPanel.Location = new Point(1074, 0);
+            rbPanel.Location = new Point(1271, 0);
+            rbPanel.Margin = new Padding(3, 4, 3, 4);
             rbPanel.Name = "rbPanel";
-            rbPanel.Padding = new Padding(10, 10, 10, 0);
-            rbPanel.Size = new Size(360, 711);
+            rbPanel.Padding = new Padding(11, 13, 11, 0);
+            rbPanel.Size = new Size(411, 953);
             rbPanel.TabIndex = 7;
             rbPanel.Visible = false;
             rbPanel.WrapContents = false;
             // 
             // ChartsForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1434, 711);
+            ClientSize = new Size(1682, 953);
             Controls.Add(rbPanel);
             Controls.Add(btnPrediction);
             Controls.Add(btnMembersIncomeExpense);
@@ -131,6 +138,7 @@
             Controls.Add(btnLineBalanceOverTime);
             Controls.Add(btnPieByCategoryType);
             Controls.Add(btnPieByCategory);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "ChartsForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Přehled – grafy";

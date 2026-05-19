@@ -27,7 +27,7 @@ namespace FinanceSandtner.Forms
         public ChartsForm()
         {
             InitializeComponent();
-            Width = 1450;
+            Width = 1600;
 
             _rbWeek = new RadioButton { Text = "Týden", AutoSize = true };
             _rbMonth = new RadioButton { Text = "Měsíc", AutoSize = true };

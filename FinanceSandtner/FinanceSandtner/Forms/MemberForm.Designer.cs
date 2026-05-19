@@ -52,86 +52,92 @@
             listMembers.BackColor = SystemColors.ScrollBar;
             listMembers.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             listMembers.FormattingEnabled = true;
-            listMembers.Location = new Point(12, 12);
+            listMembers.Location = new Point(14, 16);
+            listMembers.Margin = new Padding(3, 4, 3, 4);
             listMembers.Name = "listMembers";
-            listMembers.Size = new Size(345, 106);
+            listMembers.Size = new Size(416, 130);
             listMembers.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.ForeColor = Color.Black;
-            label1.Location = new Point(14, 29);
+            label1.Location = new Point(16, 39);
             label1.Name = "label1";
-            label1.Size = new Size(53, 17);
+            label1.Size = new Size(68, 23);
             label1.TabIndex = 1;
             label1.Text = "Jméno:";
             // 
             // txtName
             // 
-            txtName.Location = new Point(133, 26);
+            txtName.Location = new Point(168, 35);
+            txtName.Margin = new Padding(3, 4, 3, 4);
             txtName.Name = "txtName";
-            txtName.Size = new Size(100, 24);
+            txtName.Size = new Size(114, 28);
             txtName.TabIndex = 2;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.ForeColor = Color.Black;
-            label2.Location = new Point(14, 66);
+            label2.Location = new Point(16, 88);
             label2.Name = "label2";
-            label2.Size = new Size(64, 17);
+            label2.Size = new Size(82, 23);
             label2.TabIndex = 3;
             label2.Text = "Příjmení:";
             // 
             // txtLastName
             // 
-            txtLastName.Location = new Point(133, 58);
+            txtLastName.Location = new Point(168, 77);
+            txtLastName.Margin = new Padding(3, 4, 3, 4);
             txtLastName.Name = "txtLastName";
-            txtLastName.Size = new Size(100, 24);
+            txtLastName.Size = new Size(114, 28);
             txtLastName.TabIndex = 4;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.ForeColor = Color.Black;
-            label3.Location = new Point(14, 98);
+            label3.Location = new Point(16, 131);
             label3.Name = "label3";
-            label3.Size = new Size(39, 17);
+            label3.Size = new Size(50, 23);
             label3.TabIndex = 5;
             label3.Text = "Role:";
             // 
             // txtRole
             // 
-            txtRole.Location = new Point(133, 90);
+            txtRole.Location = new Point(168, 120);
+            txtRole.Margin = new Padding(3, 4, 3, 4);
             txtRole.Name = "txtRole";
-            txtRole.Size = new Size(100, 24);
+            txtRole.Size = new Size(114, 28);
             txtRole.TabIndex = 6;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.ForeColor = Color.Black;
-            label4.Location = new Point(14, 126);
+            label4.Location = new Point(16, 168);
             label4.Name = "label4";
-            label4.Size = new Size(111, 17);
+            label4.Size = new Size(143, 23);
             label4.TabIndex = 7;
             label4.Text = "Datum narození:";
             // 
             // dtpBirthDate
             // 
-            dtpBirthDate.Location = new Point(131, 120);
+            dtpBirthDate.Location = new Point(166, 160);
+            dtpBirthDate.Margin = new Padding(3, 4, 3, 4);
             dtpBirthDate.Name = "dtpBirthDate";
-            dtpBirthDate.Size = new Size(200, 24);
+            dtpBirthDate.Size = new Size(228, 28);
             dtpBirthDate.TabIndex = 8;
             // 
             // btnAdd
             // 
             btnAdd.BackColor = SystemColors.InactiveCaption;
             btnAdd.ForeColor = Color.Black;
-            btnAdd.Location = new Point(21, 22);
+            btnAdd.Location = new Point(5, 29);
+            btnAdd.Margin = new Padding(3, 4, 3, 4);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(75, 23);
+            btnAdd.Size = new Size(100, 30);
             btnAdd.TabIndex = 9;
             btnAdd.Text = "Přidat";
             btnAdd.UseVisualStyleBackColor = false;
@@ -140,9 +146,10 @@
             // 
             btnEdit.BackColor = SystemColors.InactiveCaption;
             btnEdit.ForeColor = Color.Black;
-            btnEdit.Location = new Point(102, 22);
+            btnEdit.Location = new Point(106, 29);
+            btnEdit.Margin = new Padding(3, 4, 3, 4);
             btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(75, 23);
+            btnEdit.Size = new Size(100, 30);
             btnEdit.TabIndex = 10;
             btnEdit.Text = "Upravit";
             btnEdit.UseVisualStyleBackColor = false;
@@ -151,9 +158,10 @@
             // 
             btnDelete.BackColor = SystemColors.InactiveCaption;
             btnDelete.ForeColor = Color.Black;
-            btnDelete.Location = new Point(183, 22);
+            btnDelete.Location = new Point(209, 29);
+            btnDelete.Margin = new Padding(3, 4, 3, 4);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(75, 23);
+            btnDelete.Size = new Size(100, 30);
             btnDelete.TabIndex = 11;
             btnDelete.Text = "Odstranit";
             btnDelete.UseVisualStyleBackColor = false;
@@ -162,9 +170,10 @@
             // 
             btnCancel.BackColor = SystemColors.InactiveCaption;
             btnCancel.ForeColor = Color.Black;
-            btnCancel.Location = new Point(264, 22);
+            btnCancel.Location = new Point(312, 29);
+            btnCancel.Margin = new Padding(3, 4, 3, 4);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(75, 23);
+            btnCancel.Size = new Size(100, 30);
             btnCancel.TabIndex = 12;
             btnCancel.Text = "Zrušit";
             btnCancel.UseVisualStyleBackColor = false;
@@ -178,9 +187,11 @@
             groupBox1.Controls.Add(btnDelete);
             groupBox1.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             groupBox1.ForeColor = Color.Gray;
-            groupBox1.Location = new Point(12, 288);
+            groupBox1.Location = new Point(14, 384);
+            groupBox1.Margin = new Padding(3, 4, 3, 4);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(345, 57);
+            groupBox1.Padding = new Padding(3, 4, 3, 4);
+            groupBox1.Size = new Size(416, 76);
             groupBox1.TabIndex = 13;
             groupBox1.TabStop = false;
             groupBox1.Text = "Ovládací panel";
@@ -197,21 +208,24 @@
             groupBox2.Controls.Add(label1);
             groupBox2.Font = new Font("Ebrima", 9.75F, FontStyle.Bold);
             groupBox2.ForeColor = Color.Gray;
-            groupBox2.Location = new Point(12, 127);
+            groupBox2.Location = new Point(14, 169);
+            groupBox2.Margin = new Padding(3, 4, 3, 4);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(345, 155);
+            groupBox2.Padding = new Padding(3, 4, 3, 4);
+            groupBox2.Size = new Size(416, 207);
             groupBox2.TabIndex = 14;
             groupBox2.TabStop = false;
             groupBox2.Text = "Atributy";
             // 
             // MemberForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(368, 357);
+            ClientSize = new Size(442, 476);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(listMembers);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "MemberForm";
             Text = " Členové";
             Load += MemberForm_Load;
